@@ -59,6 +59,8 @@
 (require 'init-whitespace)
 (require 'init-yasnippet)
 
+(require 'init-katrina)
+
 ;; === imports ===
 
 (require 'init-autoinsert)
