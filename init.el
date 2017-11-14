@@ -55,7 +55,7 @@
 (require 'init-rainbow-delimiters)
 (require 'init-saveplace)
 (require 'init-sudo-save)
-(require 'init-switch-window)
+;; (require 'init-switch-window)
 (require 'init-whitespace)
 (require 'init-yasnippet)
 
