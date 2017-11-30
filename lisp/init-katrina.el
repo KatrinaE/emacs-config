@@ -7,12 +7,14 @@
 ;; Requirements:
 ;; Status: not intended to be distributed yet
 
+;;; Code:
 (defun frame-bck()
   (interactive)
   (other-window -1)
 )
-(global-set-key (kbd ("C-x p") 'frame-bck)
-(global-set-key (kbd ("C-x t") 'comment-or-uncomment-region)
+
+(global-set-key (kbd "C-x p") 'frame-bck)
+(global-set-key (kbd "C-x t") 'comment-or-uncomment-region)
 
 (provide 'init-katrina)
 
