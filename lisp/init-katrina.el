@@ -16,6 +16,11 @@
 (global-set-key (kbd "C-x p") 'frame-bck)
 (global-set-key (kbd "C-x t") 'comment-or-uncomment-region)
 
+(use-package blank-mode
+  :ensure t
+  :config
+)
+
 (provide 'init-katrina)
 
 ;;; init-katrina.el ends here
