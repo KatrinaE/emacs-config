@@ -33,8 +33,8 @@
 (require 'defaults)
 (require 'appearance)
 (require 'init-font)
-;;(require 'init-ido)  Testing out ivy instead of ido
-(require 'init-ivy)
+(require 'init-ido) ;; Testing out ivy instead of ido
+;; (require 'init-ivy)
 (require 'init-colortheme)
 
 (require 'lang-modes)
