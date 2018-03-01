@@ -1,5 +1,3 @@
-# Emacs Configuration - Carlos Amedee
+# Emacs Configuration - Katrina Ellison Geltman
 
-This is my Emacs configuration. When I started learning Emacs, I
-started off with a copy of technomancy's [Emacs starter
-kit](https://github.com/technomancy/emacs-starter-kit). 
+I stole [Carlos'](https://github.com/cagedmantis) emacs config.
