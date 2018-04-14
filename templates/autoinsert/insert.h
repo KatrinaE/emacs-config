@@ -1,6 +1,6 @@
 /**
  * @file   (>>FILE<<)
- * @author Carlos Amedee <carlos.amedee@gmail.com>
+ * @author Katrina Ellison Geltman <katrina@katrinaeg.com>
  * 
  * @brief  
  * 

@@ -1,8 +1,8 @@
 ;;; init-katrina.el --- Katrina's shortcuts
 
-;; Copyright (C) Carlos Amedee
+;; Copyright (C) Katrina Ellison Geltman
 ;;
-;; Author: Carlos Amedee <carlos.amedee@gmail.com>
+;; Author: Katrina Ellison Geltman <katrina@katrinaeg.com>
 ;; Keywords:
 ;; Requirements:
 ;; Status: not intended to be distributed yet

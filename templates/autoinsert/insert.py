@@ -2,7 +2,7 @@
 # -*- mode: python; tab-width: 4 -*-
 # -*- coding: utf-8 -*-
 #
-# Carlos Amedee <carlos.amedee@gmail.com>
+# Katrina Ellison Geltman <katrina@katrinaeg.com>
 #
 
 IN1 = [5
