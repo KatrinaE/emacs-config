@@ -3,31 +3,64 @@
 ;;; Commentary:
 
 ;;; Code:
-
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))  ; Disable the scrollbar
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))      ; Disable the toolbar
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))      ; Disable the menubar
 
 (setq inhibit-startup-message t)               ; No message at startup
-(setq shell-file-name "/bin/bash")             ; Set Shell for M-| command
-(setq sentence-end-double-space nil)           ; Sentences end with one space
-(setq-default indent-tabs-mode nil)            ; Use spaces instead of tabs
 (column-number-mode t)                         ; Show column number in mode-line
-(global-font-lock-mode t)		               ; fonts are automatically highlighted
-(setq visible-bell t)                          ; No beep when reporting errors
-(size-indication-mode t)
-
-;;El Capitan fix
-(setq visible-bell nil) ;; The default
-(setq ring-bell-function 'ignore)
-
-(setq ispell-dictionary "english")             ; Set ispell dictionary
-(setq make-backup-files t)                     ; backup files ~
-(show-paren-mode 1)                            ; turn on paren match highlighting
 (line-number-mode 1)                           ; show line number the cursor is on, in status bar (the mode line)
-(global-linum-mode 1)                          ; always show line numbers
-(setq linum-format " %d ")                     ; fixes bug where line numbers are not buffered in visual-line-mode
+(global-font-lock-mode t)		               ; fonts are automatically highlighted
+(size-indication-mode t)
+(show-paren-mode 1)                            ; turn on paren match highlighting
 (global-visual-line-mode 1)                    ; Soft wrap lines
+
+;; -- line numbers --
+;; ------------------
+(when (version< emacs-version "26.0.50")
+  (progn
+	(global-linum-mode 1)
+	(setq linum-format " %d ")
+	(setq linum-format (if (not window-system) " %4d " " %4d "))
+
+	(defun linum-on ()
+	  (unless (or (minibufferp) (member major-mode linum-disabled-modes))
+		(linum-mode 1)))
+
+	;;disable line mode for listed modes
+	(setq linum-disabled-modes-list
+		  '(ansi-term
+			compilation-mode
+			eshell-mode
+			fundamental-mode
+			help-mode
+			magit-status-mode
+			mu4e-headers-mode
+			mu4e-main-mode
+			mu4e-view-mode
+			nrepl-mode
+			shell-mode
+			slime-repl-mode
+			term-mode
+			term-mode
+			wl-summary-mode))
+	(defun linum-on ()
+	  (unless (or (minibufferp) (member major-mode linum-disabled-modes-list))
+		(linum-mode 1)))))
+
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode t)
+  (setq display-line-numbers " %4d "))
+
+(when window-system
+  (tooltip-mode -1)
+  (blink-cursor-mode -1)
+  (mouse-wheel-mode t)
+  (progn (fringe-mode 5)
+         (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+         (add-to-list 'default-frame-alist '(ns-appearance . dark))
+           ;;;(add-to-list 'default-frame-alist '(ns-appearance . light))
+         (setq frame-title-format nil)))
 
 (set-default 'indicate-empty-lines t)
 (set-default 'imenu-auto-rescan t)
@@ -44,80 +77,16 @@
 (setq xterm-mouse-mode t)
 (ansi-color-for-comint-mode-on)
 
-;; Enable syntax highlighting for older Emacsen that have it off
-(global-font-lock-mode t)
-
-;; Save a list of recent files visited.
-(recentf-mode 1)
-
 ;; Default to unified diffs
 (setq diff-switches "-u -w"
       magit-diff-options "-w")
-
-;; Set window title to file name
-(when window-system
-  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-  (tooltip-mode -1)
-  (mouse-wheel-mode t)
-  (blink-cursor-mode -1))
-
-;; Backup files go into a backup dir
-(setq backup-by-copying t                                       ; don't clobber symlinks
-	  backup-directory-alist '(("." . "~/.emacs.d/backups"))    ; don't litter my fs tree
-	  delete-old-versions t
-	  kept-new-versions 6
-	  kept-old-versions 2
-	  version-control t)                                        ; use versioned backups
-
-;; disable line mode for listed modes
-(setq linum-disabled-modes-list '(shell-mode ansi-term term-mode eshell-mode wl-summary-mode compilation-mode fundamental-mode))
-(defun linum-on ()
-  (unless (or (minibufferp) (member major-mode linum-disabled-modes-list))
-    (linum-mode 1)))
 
 ;;store all autosave files
 (setq auto-save-file-name-transforms
       `((".*" ,"~/.emacs.d/auto-save-list" t)))
 
-(setq font-lock-maximum-decoration t
-      truncate-partial-width-windows nil)
-
 ;; Don't defer screen updates when performing operations
 (setq redisplay-dont-pause t)
-
-(when window-system
-  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-  (tooltip-mode -1)
-  (blink-cursor-mode -1))
-
-;; Unclutter the modeline
-(use-package diminish
-  :ensure t
-  :config
-  (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
-  (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-  (eval-after-load "paredit" '(diminish 'paredit-mode))
-  (eval-after-load "tagedit" '(diminish 'tagedit-mode))
-  (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
-  (eval-after-load "skewer-mode" '(diminish 'skewer-mode))
-  (eval-after-load "skewer-css" '(diminish 'skewer-css-mode))
-  (eval-after-load "skewer-html" '(diminish 'skewer-html-mode))
-  (eval-after-load "smartparens" '(diminish 'smartparens-mode))
-  (eval-after-load "guide-key" '(diminish 'guide-key-mode))
-  (eval-after-load "whitespace-cleanup-mode" '(diminish 'whitespace-cleanup-mode))
-  (eval-after-load "subword" '(diminish 'subword-mode))
-  (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-  (eval-after-load "autopair" '(diminish 'autopair-mode))
-  (eval-after-load "abbrev" '(diminish 'abbrev-mode))
-  (eval-after-load "js2-highlight-vars" '(diminish 'js2-highlight-vars-mode))
-  (eval-after-load "mmm-mode" '(diminish 'mmm-mode))
-  (eval-after-load "skewer-html" '(diminish 'skewer-html-mode))
-  (eval-after-load "skewer-mode" '(diminish 'skewer-mode))
-  (eval-after-load "auto-indent-mode" '(diminish 'auto-indent-minor-mode))
-  (eval-after-load "cider" '(diminish 'cider-mode))
-  (eval-after-load "smartparens" '(diminish 'smartparens-mode)))
-
-(setq linum-format (if (not window-system) "%4d " "%4d"))
 
 ;; Highlight the line number of the current line.
 (use-package hlinum
@@ -125,18 +94,106 @@
   :config
   (hlinum-activate))
 
-;; Show current function in modeline.
-;; (which-function-mode)
 
-;; Ensure linum-mode is disabled in certain major modes.
-(setq linum-disabled-modes
-      '(term-mode slime-repl-mode magit-status-mode help-mode nrepl-mode
-				  mu4e-main-mode mu4e-headers-mode mu4e-view-mode
-				  mu4e-compose-mode))
+;; Indent guides
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config (setq highlight-indent-guides-method 'column))
 
-(defun linum-on ()
-  (unless (or (minibufferp) (member major-mode linum-disabled-modes))
-    (linum-mode 1)))
+;; Modeline - hai2nan
+(if (version< emacs-version "25.3")
+	(message "--> minions isn't supported in this version of Emacs")
+  (when window-system
+	(use-package moody
+	  :ensure t
+	  :config
+	  (setq x-underline-at-descent-line t)
+	  (setq moody-mode-line-height 24)
+	  (setq moody-slant-function #'moody-slant-apple-rgb)
+	  (moody-replace-mode-line-buffer-identification)
+	  (moody-replace-vc-mode))))
+
+(add-hook 'prog-mode-hook (lambda ()
+                            (interactive)
+                            (setq show-trailing-whitespace 1)))
+
+;; Reduce scroll lag
+;; https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/28746
+(setq auto-window-vscroll nil)
+
+(use-package whitespace
+  :ensure t
+  :config
+  (setq whitespace-line-column 80) ;; limit line length
+  (setq whitespace-style '(face tabs empty trailing lines-tail))
+  (add-hook 'before-save-hook 'delete-trailing-whitespace))
+
+(use-package dimmer
+  :ensure t
+  :config
+  (dimmer-mode)
+  (setq dimmer-fraction 0.50))
+
+
+;; -- Font --
+;; ----------
+(defun font-existsp (font)
+  (if (display-graphic-p)
+	  (if (null (x-list-fonts font))
+		  nil t))
+  )
+
+(defvar preferred-fonts '("Fira Mono"
+                          "Source Code Pro"
+                          "DejaVu Sans Mono"
+						  "Monaco"
+						  "Ubuntu Mono"
+						  "Hack"))
+
+;; Set font for linux and misc.
+(if (eq system-type 'gnu/linux)
+	(if (display-graphic-p)
+		(if (font-existsp "Ubuntu Mono")
+			(set-frame-font "Ubuntu Mono" nil t)
+		  (set-frame-font "Monaco" nil t))
+	  (set-frame-font "Source Code Pro"))
+  )
+
+;; -- Theme --
+;; -----------
+(use-package color-theme
+  :ensure t
+  :config
+  (setq color-theme-is-global t)
+  (color-theme-initialize)
+
+  (use-package doom-themes
+    :ensure t
+    :config
+  	(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+  		  doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  	;;(load-theme 'doom-vibrant t)
+	(load-theme 'doom-molokai t)
+  	;;(load-theme 'doom-opera-light t)
+    (doom-themes-org-config)
+
+  	;; Enable flashing mode-line on errors
+  	(doom-themes-visual-bell-config))
+  )
+
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (setq sml/theme 'dark)
+  (setq sml/no-confirm-load-theme t)
+  (sml/setup))
+
+(if (version< emacs-version "25.3")
+	(message "--> minions isn't supported in this version of Emacs")
+  (use-package minions
+	:ensure t
+	:config (minions-mode 1)))
 
 (provide 'appearance)
 

@@ -140,6 +140,53 @@
 
 (add-to-list 'find-file-not-found-functions 'my-create-non-existent-directory)
 
+;; ======================================================================
+
+(setq shell-file-name "/bin/bash")             ; Set Shell for M-| command
+(setq sentence-end-double-space nil)           ; Sentences end with one space
+(setq-default indent-tabs-mode nil)            ; Use spaces instead of tabs
+(setq visible-bell t)                          ; No beep when reporting errors
+
+;;El Capitan fix
+(setq visible-bell nil) ;; The default
+(setq ring-bell-function 'ignore)
+
+(setq ispell-dictionary "english")             ; Set ispell dictionary
+(setq make-backup-files t)                     ; backup files ~
+
+;; Save a list of recent files visited.
+(recentf-mode 1)
+
+(defvar --backup-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p --backup-directory))
+    (make-directory --backup-directory t))
+(setq backup-directory-alist `(("." . ,--backup-directory)))
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+      )
+
+;; TODO: not loving the behaviour this presents
+;; (use-package aggressive-indent
+;;   :ensure t
+;;   :config
+;;   (global-aggressive-indent-mode 1))
+
+(use-package autopair
+  :ensure t)
+
+(use-package pbcopy
+  :ensure t
+  :config
+  (turn-on-pbcopy))
+
 (provide 'defaults)
 
 ;;; defaults.el ends here

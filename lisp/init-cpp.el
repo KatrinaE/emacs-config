@@ -1,3 +1,9 @@
+;;; init-cpp.el --- c++ configuration init
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package irony
   :config
   (progn
@@ -89,4 +95,14 @@
     (add-hook 'c++-mode-hook #'setup-flycheck-rtags)
     ))
 
+(use-package clang-format
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c i") 'clang-format-region)
+  (global-set-key (kbd "C-c u") 'clang-format-buffer)
+
+  (setq clang-format-style-option "llvm"))
+
 (provide 'init-cpp)
+
+;;; init-cpp.el ends here

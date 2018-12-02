@@ -1,5 +1,12 @@
+;;; init-flycheck.el --- Flycheck configuration init
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package flycheck
   :ensure t
+  :diminish
   :config
   (global-flycheck-mode)
   (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -42,3 +49,5 @@
   )
 
 (provide 'init-flycheck)
+
+;;; init-flycheck.el ends here

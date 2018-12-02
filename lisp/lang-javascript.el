@@ -1,3 +1,9 @@
+;;; lang-javascript.el --- Javascript configuration init
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package js2-mode
   :ensure t
   :config
@@ -17,8 +23,14 @@
 
 	(setq js-indent-level 2)
 	(setq js2-indent-level 2)
-	(setq js2-basic-offset 2)
-	)
-  )
+	(setq js2-basic-offset 2))
 
-(provide 'init-javascript)
+  (use-package ac-js2
+	:ensure t)
+
+  (use-package js-format
+	:ensure t))
+
+(provide 'lang-javascript)
+
+;;; lang-javascript.el ends here

@@ -1,6 +1,9 @@
-;; Emacs config
+;;; init-ido.el --- Flycheck configuration init
 
-;; ido-mode is like magic pixie dust!
+;;; Commentary:
+
+;;; Code:
+
 (when (> emacs-major-version 21)
 
   (use-package ido
@@ -47,3 +50,5 @@
 	  )
 	))
 (provide 'init-ido)
+
+;;; init-ido.el ends here

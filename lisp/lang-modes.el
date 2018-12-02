@@ -1,11 +1,20 @@
-;;; lang-modes.el --- appearance configuration
+;;; lang-modes.el --- various language mode configurations
 
 ;;; Commentary:
 
 ;;; Code:
 
 (use-package protobuf-mode
-  :ensure t)
+  :ensure t
+  :mode ("\\.proto\\'" . protobuf-mode)
+  :config
+  (defconst my-protobuf-style
+    '((c-basic-offset 2)
+	  (tab-width 8)
+      (indent-tabs-mode t)))
+
+  (add-hook 'protobuf-mode-hook
+			(lambda () (c-add-style "my-style" my-protobuf-style t))))
 
 (use-package fish-mode
   :ensure t)
@@ -18,18 +27,16 @@
   :config
   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
-(use-package python-mode
-  :ensure t)
+;; (use-package python-mode
+;;   :ensure t)
 
-(use-package web-mode
-  :ensure t)
-
-(use-package js2-mode
-  :ensure t)
+;; (use-package web-mode
+;;   :ensure t)
 
 (use-package haskell-mode
   :ensure t)
 
+;; https://jblevins.org/projects/markdown-mode/
 (use-package markdown-mode
   :ensure edit-indirect
   :mode (("README\\.md\\'" . gfm-mode)
@@ -37,20 +44,25 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package rust-mode
-  :ensure t)
-
 (use-package yaml-mode
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-)
+  (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode)))
+
+(use-package flycheck-yamllint
+  :ensure t
+  :defer t
+  :init
+  (progn
+    (eval-after-load 'flycheck
+      '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))))
 
 (use-package smarty-mode
-  :ensure t)
+  :defer t)
 
 (use-package sql-indent
-  :ensure t
+  :defer t
   :config
   (eval-after-load 'sql
 	'(load-library "sql-indent")))

@@ -11,6 +11,7 @@ custom.el*
 ede-projects.el
 elim/
 elpa/*
+packages/*
 eshell/
 history
 ido.last
@@ -26,6 +27,8 @@ thumbs/*
 tramp
 url/cookies
 #*
+#!*
+.last-package-update-day
 
 # OS generated files #
 ######################

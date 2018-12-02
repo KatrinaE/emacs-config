@@ -1,3 +1,9 @@
+;;; init-saveplace.el --- Save place configuration init
+
+;;; Commentary:
+
+;;; Code:
+
 (when (>= emacs-major-version 25)
   (save-place-mode 1))
 
@@ -8,3 +14,5 @@
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
 (provide 'init-saveplace)
+
+;;; init-saveplace.el ends here
