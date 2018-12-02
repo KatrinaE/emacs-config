@@ -1,12 +1,12 @@
-;; Copyright (C) Carlos Amedee
-;;
-;; Author: Carlos Amedee <carlos.amedee@gmail.com>
-;; Keywords: 
-;; Requirements: 
-;; Status: not intended to be distributed yet
+;;; defaults.el --- default configuration
 
-;; Share clipboard
-(setq x-select-enable-clipboard t)
+;;; Commentary:
+
+;;; Code:
+
+;; Share the clipboard with X
+(setq x-select-enable-clipboard t
+	  select-enable-clipboard t)
 
 ;; Auto refresh buffers
 (global-auto-revert-mode 1)
@@ -14,9 +14,6 @@
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
-
-;; Show keystrokes in progress
-(setq echo-keystrokes 0.1)
 
 ;; Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
@@ -80,7 +77,11 @@
 (setq-default truncate-lines t)
 
 ;; Keep cursor away from edges when scrolling up/down
-(require 'smooth-scrolling)
+(use-package smooth-scrolling
+  :ensure t
+  :config
+  (smooth-scrolling-mode 1)
+  (setq smooth-scroll-margin 5))
 
 ;; Allow recursive minibuffers
 (setq enable-recursive-minibuffers t)
@@ -140,3 +141,5 @@
 (add-to-list 'find-file-not-found-functions 'my-create-non-existent-directory)
 
 (provide 'defaults)
+
+;;; defaults.el ends here
