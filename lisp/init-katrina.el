@@ -21,6 +21,11 @@
 ;;  :config
 ;;)
 
+;; If you are having trouble with Go tools, run
+;; M-x go-projectile-install-tools
+;; To update, run
+;; M-x go-projectile-update-tools
+
 (provide 'init-katrina)
 
 ;;; init-katrina.el ends here
