@@ -29,7 +29,6 @@
 
 (require 'defaults)
 (require 'appearance)
-;; <<<<<<< HEAD
 (require 'init-font)
 (require 'init-ido) ;; Testing out ivy instead of ido
 ;; (require 'init-ivy)
@@ -37,9 +36,6 @@
 
 (require 'lang-modes)
 (require 'init-powerline)
-;; =======
-;; (require 'init-ivy)
-;; >>>>>>> master
 
 (require 'init-autoinsert)
 (require 'init-cc)
