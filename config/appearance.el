@@ -156,7 +156,8 @@
 	(if (display-graphic-p)
 		(if (font-existsp "Ubuntu Mono")
 			(set-frame-font "Ubuntu Mono" nil t)
-		  (set-frame-font "Monaco" nil t))
+		  ;; (set-frame-font "Monaco" nil t)
+                  )
 	  (set-frame-font "Source Code Pro"))
   )
 
