@@ -182,12 +182,12 @@
   	(doom-themes-visual-bell-config))
   )
 
-(use-package smart-mode-line
-  :ensure t
-  :config
-  (setq sml/theme 'dark)
-  (setq sml/no-confirm-load-theme t)
-  (sml/setup))
+;; (use-package smart-mode-line
+;;   :ensure t
+;;   :config
+;;   (setq sml/theme 'dark)
+;;   (setq sml/no-confirm-load-theme t)
+;;   (sml/setup))
 
 (if (version< emacs-version "25.3")
 	(message "--> minions isn't supported in this version of Emacs")
